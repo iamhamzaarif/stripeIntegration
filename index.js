@@ -78,6 +78,34 @@ app.get("/checkout-session", async (req, res) => {
   res.send(session);
 });
 
+app.post('/webhook', async (req, res) => {
+  // Retrieve the event data from the request
+  const event = req.body;
+
+  // Verify the event using the Stripe webhook signing secret
+  const signature = req.headers['stripe-signature'];
+  try {
+    const verifiedEvent = stripe.webhooks.constructEvent(
+      req.rawBody, // Use rawBody instead of body for bodyParser to work with webhook
+      signature,
+      '<your_webhook_signing_secret_here>'
+    );
+
+    // Handle the verified event based on its type
+    switch (verifiedEvent.type) {
+      case 'payment_intent.succeeded':
+        console.log()("Thank you!")
+    }
+  } catch (err) {
+    console.log('Error verifying webhook event:', err);
+    res.sendStatus(400);
+    return;
+  }
+
+  // Send a response to acknowledge receipt of the event
+  res.sendStatus(200);
+});
+
 // Launch app to listen to specified port
 app.listen(port, function () {
   console.log("Running NodeJS, Express, Stripe checkout application on port " + port);
