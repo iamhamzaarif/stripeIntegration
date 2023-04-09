@@ -27,19 +27,19 @@ const YOUR_DOMAIN = 'https://clothingcrown.com/poc/stripe';
 app.post('/create-session', async (req, res) => {
   console.log(req.body);
 
-  var iphoneType = req.body.iphone;
+  var productType = req.body.prod;
   var email = req.body.email;
   var productData = {name: '', images: []};
   var unit_amount = 0;
 
   // Determine the product details based on the type received in the request
-  if(iphoneType === 'xyz') {
+  if(productType === 'xyz') {
     productData.name = 'xyz';
-    productData.images.push('https://i.ibb.co/z8YdmXC/iphone-12-mini.png');
+    productData.images.push('https://i.ibb.co/z8YdmXC/product-12-mini.png');
     unit_amount = 69900;
-  } else if(iphoneType === 'abc') {
+  } else if(productType === 'abc') {
     productData.name = 'abc';
-    productData.images.push('https://i.ibb.co/Tcj0zy4/iphone-12-pro.png');
+    productData.images.push('https://i.ibb.co/Tcj0zy4/product-12-pro.png');
     unit_amount = 99900;
   }
 
